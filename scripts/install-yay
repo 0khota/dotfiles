@@ -1,0 +1,8 @@
+git clone https://aur.archlinux.org/yay-git.git
+sudo chown -R okhota:okhota yay-git
+cd yay-git
+makepkg --noconfirm -si
+cd ..
+sudo rm -r yay-git
+
+echo "yay installed"

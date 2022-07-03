@@ -1,0 +1,17 @@
+if ! command -v yay &> /dev/null
+then
+    echo "installing yay...
+    ./install-yay
+fi
+
+
+yay --needed --noconfirm -S dotnet-sdk unityhub-beta visual-studio-code-bin jdk intellij-idea-community-edition docker maven
+
+
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+sudo systemctl enable docker
+docker run hello-world
+sudo systemctl enable docker
+
