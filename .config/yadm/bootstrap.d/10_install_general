@@ -1,0 +1,3 @@
+sudo pacman --noconfirm --needed -S neovim wget pulsemixer xdg-desktop-portal-gtk
+sudo pacman --noconfirm --needed -S man-db man-pages libnotify
+

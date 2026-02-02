@@ -1,0 +1,13 @@
+font-family = "Hack Nerd Font Mono"
+font-family = "Noto Serif CJK JP"
+window-padding-x = 25 
+window-padding-y = 25 
+window-decoration = none
+copy-on-select = true
+right-click-action = paste
+confirm-close-surface = false
+shell-integration = zsh
+shell-integration-features = cursor,ssh-env
+bell-features=no-audio
+#command = zsh
+theme = Rose Pine

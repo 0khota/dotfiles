@@ -1,0 +1,14 @@
+if ! command -v yay >/dev/null 2>&1; then
+
+	echo "Installing yay.../n"
+	sudo pacman -S --needed git base-devel
+	cd $HOME
+	git clone https://aur.archlinux.org/yay.git
+	cd yay
+	makepkg -si
+	cd $HOME
+	sudo rm -r yay
+
+else
+	echo "Yay already installed."
+fi

@@ -1,0 +1,3 @@
+sudo pacman --needed --noconfirm -S ghostty fuzzel mako xdg-desktop-portal-wlr cliphist networkmanager-dmenu wl-clip-persist xwayland-satellite xorg-xrdb swww
+
+yay --needed --noconfirm -S eww xfce-polkit ttf-hack-nerd noto-fonts-cjk
