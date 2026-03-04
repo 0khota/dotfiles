@@ -1,0 +1,1 @@
+sudo pacman --needed --noconfirm -S binsider unzip wine lutris pavucontrol

@@ -1,0 +1,48 @@
+have_fingerprint_device() {
+  local busctl_bin
+  busctl_bin="$(command -v busctl)" || return 1
+
+  local out
+  out="$("$busctl_bin" --system call \
+      net.reactivated.Fprint \
+      /net/reactivated/Fprint/Manager \
+      net.reactivated.Fprint.Manager \
+      GetDevices 2>/dev/null)" || return 1
+
+  [[ "$out" =~ \ao\ ([0-9]+)\  ]] || return 1
+  (( BASH_REMATCH[1] > 0 ))
+}
+
+yes_no_prompt(){
+	read -rp "$1 [y/N] " answer
+	case "$answer" in
+	  [yY]|[yY][eE][sS]) return 0 ;;
+	  *)                 return 1 ;;
+	esac
+}
+
+set_pamline() {
+	pam_file=$1
+	line=$2
+
+	if ! grep -qE '^\s*auth\s+sufficient\s+pam_fprintd\.so\b' "$pam_file"; then
+	  echo "Set $line in $pam_file"
+	  sudo sed -i \
+	    "/^[[:space:]]*auth[[:space:]]/i $line" \
+	    "$pam_file"
+	fi
+}
+
+sudo pacman --needed --noconfirm -S fprintd imagemagick
+
+if have_fingerprint_device; then
+	if yes_no_prompt "Setup Fingerprint?"; then
+		echo -e "\e[31mSetup Fingerprint...\e[0m"
+		sudo fprintd-enroll $(id -un)
+		echo -e "\e[31mSetup Pam...\e[0m"
+		set_pamline "/etc/pam.d/system-local-login" "auth      sufficient pam_fprintd.so"
+		set_pamline "/etc/pam.d/sudo" "auth      sufficient pam_fprintd.so"
+
+	fi
+	 
+fi
